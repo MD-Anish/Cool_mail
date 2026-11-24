@@ -1,0 +1,23 @@
+{
+  "name": "reachinbox-email-scheduler",
+  "private": true,
+  "workspaces": ["backend", "frontend"],
+  "scripts": {
+    "infra:up": "docker compose up -d postgres redis elasticsearch",
+    "infra:down": "docker compose stop postgres redis elasticsearch",
+    "infra:logs": "docker compose logs -f postgres redis elasticsearch",
+    "db:migrate": "npm run -w backend db:migrate",
+    "db:generate": "npm run -w backend db:generate",
+    "dev": "concurrently -n API,WORKER,WEB -c cyan,magenta,green \"npm run dev:api\" \"npm run dev:worker\" \"npm run dev:frontend\"",
+    "dev:api": "npm run -w backend dev",
+    "dev:worker": "npm run -w backend worker",
+    "dev:frontend": "npm run -w frontend dev",
+    "test": "npm run -w backend test",
+    "typecheck": "npm run -w backend typecheck && npm run -w frontend build",
+    "build": "npm run -w backend build && npm run -w frontend build",
+    "test:load": "npm run -w backend test:load"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
